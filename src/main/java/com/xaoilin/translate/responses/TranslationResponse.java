@@ -10,4 +10,5 @@ public class TranslationResponse {
     private final String targetLanguage;
     private final String sourceText;
     private final String translatedText;
+    private final String direction;
 }

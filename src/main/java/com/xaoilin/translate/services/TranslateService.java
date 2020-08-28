@@ -17,13 +17,19 @@ public class TranslateService {
         translate = TranslateOptions.getDefaultInstance().getService();
     }
 
-    public String translate(String textToTranslate, SupportedLanguages source, SupportedLanguages target) {
+    public TranslationResponse translate(String textToTranslate, SupportedLanguages source, SupportedLanguages target) {
         Translate.TranslateOption sourceLanguage = Translate.TranslateOption.sourceLanguage(source.getCode());
         Translate.TranslateOption targetLanguage = Translate.TranslateOption.targetLanguage(target.getCode());
 
         Translation translatedText = translate.translate(textToTranslate, sourceLanguage, targetLanguage);
 
-        return translatedText.getTranslatedText();
+        return TranslationResponse.builder()
+                .sourceLanguage(source.name())
+                .sourceText(textToTranslate)
+                .targetLanguage(target.name())
+                .translatedText(translatedText.getTranslatedText())
+                .direction(target.getDirection())
+                .build();
     }
 
     public TranslationResponse translate(String textToTranslate, SupportedLanguages target) {
@@ -38,6 +44,7 @@ public class TranslateService {
                 .sourceText(textToTranslate)
                 .targetLanguage(target.name())
                 .translatedText(translatedText.getTranslatedText())
+                .direction(target.getDirection())
                 .build();
     }
 }

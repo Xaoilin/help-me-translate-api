@@ -21,10 +21,13 @@ class TranslateServiceTest {
         String englishText = "The weather is lovely today";
 
         // when
-        String translatedText = translateService.translate(englishText, SupportedLanguages.ENGLISH, SupportedLanguages.ARABIC);
+        TranslationResponse translatedText = translateService.translate(englishText, SupportedLanguages.ENGLISH, SupportedLanguages.ARABIC);
 
         // then
-        Assertions.assertThat(translatedText).isEqualTo("الطقس جميل اليوم");
+        Assertions.assertThat(translatedText.getTranslatedText()).isEqualTo("الطقس جميل اليوم");
+        Assertions.assertThat(translatedText.getSourceText()).isEqualTo(englishText);
+        Assertions.assertThat(translatedText.getSourceLanguage()).isEqualTo(SupportedLanguages.ENGLISH.name());
+        Assertions.assertThat(translatedText.getTargetLanguage()).isEqualTo(SupportedLanguages.ARABIC.name());
     }
 
     @Test
@@ -33,10 +36,13 @@ class TranslateServiceTest {
         String textToTranslate = "أنا جائع";
 
         // when
-        String translatedText = translateService.translate(textToTranslate, SupportedLanguages.ARABIC, SupportedLanguages.ENGLISH);
+        TranslationResponse translatedText = translateService.translate(textToTranslate, SupportedLanguages.ARABIC, SupportedLanguages.ENGLISH);
 
         // then
-        Assertions.assertThat(translatedText).isEqualTo("I am hungry");
+        Assertions.assertThat(translatedText.getTranslatedText()).isEqualTo("I am hungry");
+        Assertions.assertThat(translatedText.getSourceText()).isEqualTo(textToTranslate);
+        Assertions.assertThat(translatedText.getSourceLanguage()).isEqualTo(SupportedLanguages.ARABIC.name());
+        Assertions.assertThat(translatedText.getTargetLanguage()).isEqualTo(SupportedLanguages.ENGLISH.name());
     }
 
     @Test
@@ -45,10 +51,13 @@ class TranslateServiceTest {
         String textToTranslate = "أنا جائع";
 
         // when
-        String translatedText = translateService.translate(textToTranslate, SupportedLanguages.ENGLISH, SupportedLanguages.ARABIC);
+        TranslationResponse translatedText = translateService.translate(textToTranslate, SupportedLanguages.ENGLISH, SupportedLanguages.ARABIC);
 
         // then
-        Assertions.assertThat(translatedText).isEqualTo("أنا جائع");
+        Assertions.assertThat(translatedText.getTranslatedText()).isEqualTo("أنا جائع");
+        Assertions.assertThat(translatedText.getSourceText()).isEqualTo(textToTranslate);
+        Assertions.assertThat(translatedText.getSourceLanguage()).isEqualTo(SupportedLanguages.ENGLISH.name());
+        Assertions.assertThat(translatedText.getTargetLanguage()).isEqualTo(SupportedLanguages.ARABIC.name());
     }
 
     @Test
