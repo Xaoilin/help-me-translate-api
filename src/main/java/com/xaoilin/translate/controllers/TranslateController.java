@@ -1,6 +1,5 @@
 package com.xaoilin.translate.controllers;
 
-import com.xaoilin.translate.domain.SupportedLanguages;
 import com.xaoilin.translate.responses.TranslationDTO;
 import com.xaoilin.translate.responses.TranslationResponse;
 import com.xaoilin.translate.services.ParseService;
@@ -29,7 +28,7 @@ public class TranslateController {
     @PostMapping(path = "/file/{targetLanguageCode}")
     public ResponseEntity<TranslationResponse> translateFile(@RequestParam("file") MultipartFile file, @PathVariable String targetLanguageCode) throws IOException {
         String fileContent = parseService.parseContent(file);
-        TranslationResponse translate = translateService.translate(fileContent, SupportedLanguages.fromCode(targetLanguageCode));
+        TranslationResponse translate = translateService.translate(fileContent, targetLanguageCode);
 
         return ResponseEntity.ok().body(translate);
     }
@@ -38,7 +37,7 @@ public class TranslateController {
     @PostMapping(path = "/json/{targetLanguageCode}")
     public ResponseEntity<TranslationResponse> translateJson(@RequestBody TranslationDTO translationDTO, @PathVariable String targetLanguageCode) {
 
-        TranslationResponse translate = translateService.translate(translationDTO.getText(), SupportedLanguages.fromCode(targetLanguageCode));
+        TranslationResponse translate = translateService.translate(translationDTO.getText(), targetLanguageCode);
 
         return ResponseEntity.ok().body(translate);
     }
@@ -47,7 +46,7 @@ public class TranslateController {
     @PostMapping(path = "/json/{sourceLanguageCode}/{targetLanguageCode}")
     public ResponseEntity<TranslationResponse> translateJson(@RequestBody TranslationDTO translationDTO, @PathVariable String sourceLanguageCode, @PathVariable String targetLanguageCode) {
 
-        TranslationResponse translate = translateService.translate(translationDTO.getText(), SupportedLanguages.fromCode(sourceLanguageCode), SupportedLanguages.fromCode(targetLanguageCode));
+        TranslationResponse translate = translateService.translate(translationDTO.getText(), sourceLanguageCode, targetLanguageCode);
 
         return ResponseEntity.ok().body(translate);
     }

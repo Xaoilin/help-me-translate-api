@@ -36,7 +36,7 @@ class TranslateControllerTest {
      * Integration test
      */
     @Test
-    public void given_englishText_when_translateEndpointIsCalled_then_returnsArabicText() throws Exception {
+    void given_englishText_when_translateEndpointIsCalled_then_returnsArabicText() throws Exception {
         //given
         byte[] fileContent = "Good Morning, my name is Sabah.".getBytes();
         String key = "file";
@@ -57,7 +57,7 @@ class TranslateControllerTest {
     }
 
     @Test
-    public void given_textInJson_when_translateWithText_then_returnsArabicText() throws Exception {
+    void given_textInJson_when_translateWithText_then_returnsArabicText() throws Exception {
         //given
         TranslationDTO translationDTO = TranslationDTO.builder()
                 .text("Good Morning, my name is Sabah.")
@@ -79,7 +79,7 @@ class TranslateControllerTest {
     }
 
     @Test
-    public void given_arabicInJson_when_translateWithText_then_returnsEnglishTranslationDTO() throws Exception {
+    void given_arabicInJson_when_translateWithText_then_returnsEnglishTranslationDTO() throws Exception {
         //given
         TranslationDTO translationDTO = TranslationDTO.builder()
                 .text("صباح الخير اسمي صباح.")

@@ -1,50 +1,85 @@
 package com.xaoilin.translate.services;
 
-import com.google.cloud.translate.Detection;
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
 import com.xaoilin.translate.domain.SupportedLanguages;
 import com.xaoilin.translate.responses.TranslationResponse;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TranslateService {
 
-    private Translate translate;
+    private final Translate translate;
+    private final ParseService parseService;
+    private final CharacterService characterService;
 
-    public TranslateService() {
+    @Autowired
+    public TranslateService(ParseService parseService, CharacterService characterService) {
         translate = TranslateOptions.getDefaultInstance().getService();
+        this.parseService = parseService;
+        this.characterService = characterService;
     }
 
-    public TranslationResponse translate(String textToTranslate, SupportedLanguages source, SupportedLanguages target) {
-        Translate.TranslateOption sourceLanguage = Translate.TranslateOption.sourceLanguage(source.getCode());
-        Translate.TranslateOption targetLanguage = Translate.TranslateOption.targetLanguage(target.getCode());
-
-        Translation translatedText = translate.translate(textToTranslate, sourceLanguage, targetLanguage);
-
-        return TranslationResponse.builder()
-                .sourceLanguage(source.name())
-                .sourceText(textToTranslate)
-                .targetLanguage(target.name())
-                .translatedText(translatedText.getTranslatedText())
-                .direction(target.getDirection())
-                .build();
+    public TranslationResponse translate(String textToTranslate, String target) {
+        return translate(textToTranslate, Strings.EMPTY, target);
     }
 
-    public TranslationResponse translate(String textToTranslate, SupportedLanguages target) {
-        Translate.TranslateOption targetLanguage = Translate.TranslateOption.targetLanguage(target.getCode());
+    public TranslationResponse translate(String textToTranslate, String source, String target) {
+        SupportedLanguages supportedSourceLanguage = SupportedLanguages.fromCode(source).orElse(SupportedLanguages.AUTOMATIC);
+        SupportedLanguages supportedTargetLanguage = SupportedLanguages.fromCode(target).orElse(SupportedLanguages.AUTOMATIC);
 
-        Translation translatedText = translate.translate(textToTranslate, targetLanguage);
+        Translate.TranslateOption sourceLanguageOption = Translate.TranslateOption.sourceLanguage(supportedSourceLanguage.getCode());
+        Translate.TranslateOption targetLanguageOption = Translate.TranslateOption.targetLanguage(supportedTargetLanguage.getCode());
 
-        SupportedLanguages sourceLanguage = SupportedLanguages.fromCode(translatedText.getSourceLanguage());
+        List<String> multilineText = parseService.convertLinesToArray(textToTranslate);
+        Pair<String, String> sourceAndTranslationPair = translateMultilineText(multilineText, sourceLanguageOption, targetLanguageOption);
+
+        SupportedLanguages sourceLanguage = SupportedLanguages.fromCode(sourceAndTranslationPair.getLeft()).orElse(SupportedLanguages.AUTOMATIC);
+
+        String translatedText = convertAsciiCharacters(sourceAndTranslationPair.getRight());
 
         return TranslationResponse.builder()
                 .sourceLanguage(sourceLanguage.name())
                 .sourceText(textToTranslate)
-                .targetLanguage(target.name())
-                .translatedText(translatedText.getTranslatedText())
-                .direction(target.getDirection())
+                .targetLanguage(supportedTargetLanguage.name())
+                .translatedText(translatedText)
+                .direction(supportedTargetLanguage.getDirection())
                 .build();
+    }
+
+    private Pair<String, String> translateMultilineText(List<String> multilineText, Translate.TranslateOption sourceLanguage, Translate.TranslateOption targetLanguage) {
+        // todo: refactor to behavioural parameterisation with functional interface
+        List<Translation> translations = multilineText.stream()
+                .map(text -> {
+                    if (Strings.isBlank(sourceLanguage.toString())) {
+                        return translate.translate(text, targetLanguage);
+                    }
+
+                    return translate.translate(text, sourceLanguage, targetLanguage);
+                })
+                .collect(Collectors.toList());
+
+        String googleSourceLanguage = translations.stream()
+                .findFirst()
+                .map(Translation::getSourceLanguage)
+                .orElse(Strings.EMPTY);
+
+        String translatedText = translations.stream()
+                .map(Translation::getTranslatedText)
+                .collect(Collectors.joining("\n"));
+
+        return new ImmutablePair<>(googleSourceLanguage, translatedText);
+    }
+
+    private String convertAsciiCharacters(String text) {
+        return characterService.convertApostrophe(text);
     }
 }

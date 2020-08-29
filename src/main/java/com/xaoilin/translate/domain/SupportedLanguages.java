@@ -1,6 +1,9 @@
 package com.xaoilin.translate.domain;
 
+import java.util.Optional;
+
 public enum SupportedLanguages {
+    AUTOMATIC("", ""),
     ENGLISH("en", "ltr"),
     ARABIC("ar", "rtl");
 
@@ -20,13 +23,13 @@ public enum SupportedLanguages {
         return direction;
     }
 
-    public static SupportedLanguages fromCode(String code) {
+    public static Optional<SupportedLanguages> fromCode(String code) {
         for (SupportedLanguages language : SupportedLanguages.values()) {
             if (language.getCode().equals(code)) {
-                return language;
+                return Optional.of(language);
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 }
