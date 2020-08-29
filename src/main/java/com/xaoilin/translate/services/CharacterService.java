@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 public class CharacterService {
 
     public String convertApostrophe(String wordWithApostropheASCII) {
-        return wordWithApostropheASCII.replace(AsciiConstants.APOSTROPHE, "'");
+        return wordWithApostropheASCII.replace(AsciiConstants.APOSTROPHE, "'")
+                .replace(AsciiConstants.APOSTROPHE_ARABIC, "'");
     }
 }

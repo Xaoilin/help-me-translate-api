@@ -24,4 +24,16 @@ class CharacterServiceTest {
         // then
         Assertions.assertThat(convertedWord).isEqualTo("we're");
     }
+
+    @Test
+    void given_stringWithApostropheCode_then_shouldReplaceASCIICodeWithApostrophe() {
+        // given
+        String wordWithApostropheASCII = "القلق لدى &quot;المراهقين&quot;";
+
+        // when
+        String convertedWord = characterService.convertApostrophe(wordWithApostropheASCII);
+
+        // then
+        Assertions.assertThat(convertedWord).isEqualTo("القلق لدى 'المراهقين'");
+    }
 }

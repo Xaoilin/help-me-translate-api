@@ -117,4 +117,16 @@ class TranslateServiceTest {
         // then
         assertThat(translate.getTranslatedText()).isEqualTo("There are many different things that can make us anxious. For example, we might feel anxious when we're about to take an important test, or when we're about to give a speech in front of an audience.");
     }
+
+    @Test
+    void given_englishThatTranslatesToApostrophe_when_translating_then_returnsApostropheNotASCIICode() {
+        // given
+        String textToTranslate = "Anxiety in 'teenagers'";
+
+        // when
+        TranslationResponse translate = translateService.translate(textToTranslate, SupportedLanguages.ARABIC.getCode());
+
+        // then
+        assertThat(translate.getTranslatedText()).isEqualTo("القلق لدى 'المراهقين'");
+    }
 }
