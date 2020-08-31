@@ -1,7 +1,11 @@
 # help-me-translate-api
 
-# Deployment Instructions
-# API build on ubuntu
+## Deployment Instructions
+### API build on ubuntu
+
+sudo apt update
+sudo apt install vim
+sudo apt install git-all -y
 sudo apt install maven -y
 cd /home
 git clone https://github.com/Xaoilin/help-me-translate-api.git
