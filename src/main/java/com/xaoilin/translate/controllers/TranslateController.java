@@ -16,7 +16,7 @@ import java.io.IOException;
 public class TranslateController {
 
     private final TranslateService translateService;
-    private ParseService parseService;
+    private final ParseService parseService;
 
     @Autowired
     public TranslateController(TranslateService translateService, ParseService parseService) {
@@ -45,6 +45,15 @@ public class TranslateController {
     @CrossOrigin
     @PostMapping(path = "/json/{sourceLanguageCode}/{targetLanguageCode}")
     public ResponseEntity<TranslationResponse> translateJson(@RequestBody TranslationDTO translationDTO, @PathVariable String sourceLanguageCode, @PathVariable String targetLanguageCode) {
+
+        TranslationResponse translate = translateService.translate(translationDTO.getText(), sourceLanguageCode, targetLanguageCode);
+
+        return ResponseEntity.ok().body(translate);
+    }
+
+    @CrossOrigin
+    @PostMapping(path = "/markup/json/{sourceLanguageCode}/{targetLanguageCode}")
+    public ResponseEntity<TranslationResponse> translateMarkup(@RequestBody TranslationDTO translationDTO, @PathVariable String sourceLanguageCode, @PathVariable String targetLanguageCode) {
 
         TranslationResponse translate = translateService.translate(translationDTO.getText(), sourceLanguageCode, targetLanguageCode);
 
