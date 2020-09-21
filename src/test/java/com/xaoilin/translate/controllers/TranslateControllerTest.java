@@ -1,10 +1,9 @@
 package com.xaoilin.translate.controllers;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.xaoilin.translate.domain.SupportedLanguages;
-import com.xaoilin.translate.responses.TranslationDTO;
+import com.xaoilin.translate.core.controllers.TranslateController;
+import com.xaoilin.translate.core.domain.SupportedLanguages;
+import com.xaoilin.translate.core.responses.TranslationDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

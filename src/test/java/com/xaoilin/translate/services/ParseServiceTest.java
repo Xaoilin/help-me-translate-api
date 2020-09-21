@@ -1,5 +1,6 @@
 package com.xaoilin.translate.services;
 
+import com.xaoilin.translate.core.services.ParseService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,8 +8,6 @@ import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ParseServiceTest {
 

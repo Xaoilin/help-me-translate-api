@@ -1,4 +1,4 @@
-package com.xaoilin.translate.config;
+package com.xaoilin.translate.core.config;
 
 import org.springframework.context.annotation.Configuration;
 

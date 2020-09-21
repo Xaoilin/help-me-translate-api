@@ -1,5 +1,6 @@
 package com.xaoilin.translate.services;
 
+import com.xaoilin.translate.core.services.CharacterService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

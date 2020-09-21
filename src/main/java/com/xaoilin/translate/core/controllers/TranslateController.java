@@ -1,9 +1,9 @@
-package com.xaoilin.translate.controllers;
+package com.xaoilin.translate.core.controllers;
 
-import com.xaoilin.translate.responses.TranslationDTO;
-import com.xaoilin.translate.responses.TranslationResponse;
-import com.xaoilin.translate.services.ParseService;
-import com.xaoilin.translate.services.TranslateService;
+import com.xaoilin.translate.core.responses.TranslationDTO;
+import com.xaoilin.translate.core.responses.TranslationResponse;
+import com.xaoilin.translate.core.services.ParseService;
+import com.xaoilin.translate.core.services.TranslateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

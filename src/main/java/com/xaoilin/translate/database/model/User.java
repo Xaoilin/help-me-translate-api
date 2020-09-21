@@ -1,4 +1,4 @@
-package com.xaoilin.translate.model;
+package com.xaoilin.translate.database.repository.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package com.xaoilin.translate.responses;
+package com.xaoilin.translate.core.responses;
 
 import lombok.Builder;
 import lombok.Data;

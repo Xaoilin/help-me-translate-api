@@ -1,10 +1,10 @@
-package com.xaoilin.translate.services;
+package com.xaoilin.translate.core.services;
 
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
-import com.xaoilin.translate.domain.SupportedLanguages;
-import com.xaoilin.translate.responses.TranslationResponse;
+import com.xaoilin.translate.core.domain.SupportedLanguages;
+import com.xaoilin.translate.core.responses.TranslationResponse;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.util.Strings;

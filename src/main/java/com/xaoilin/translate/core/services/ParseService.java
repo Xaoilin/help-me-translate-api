@@ -1,4 +1,4 @@
-package com.xaoilin.translate.services;
+package com.xaoilin.translate.core.services;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;

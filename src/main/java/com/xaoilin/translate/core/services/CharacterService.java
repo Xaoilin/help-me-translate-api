@@ -1,6 +1,6 @@
-package com.xaoilin.translate.services;
+package com.xaoilin.translate.core.services;
 
-import com.xaoilin.translate.constants.AsciiConstants;
+import com.xaoilin.translate.core.constants.AsciiConstants;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,4 +1,4 @@
-package com.xaoilin.translate.constants;
+package com.xaoilin.translate.core.constants;
 
 public class AsciiConstants {
     public static final String APOSTROPHE = "&#39;";

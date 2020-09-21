@@ -1,4 +1,4 @@
-package com.xaoilin.translate.domain;
+package com.xaoilin.translate.core.domain;
 
 import java.util.Optional;
 
