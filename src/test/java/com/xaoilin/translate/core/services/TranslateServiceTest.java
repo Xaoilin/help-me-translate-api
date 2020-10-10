@@ -1,16 +1,19 @@
-package com.xaoilin.translate.services;
+package com.xaoilin.translate.core.services;
 
 import com.xaoilin.translate.core.domain.SupportedLanguages;
-import com.xaoilin.translate.core.services.TranslateService;
 import com.xaoilin.translate.core.responses.TranslationResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {TranslateService.class, ParseService.class, CharacterService.class})
 class TranslateServiceTest {
 
     @Autowired

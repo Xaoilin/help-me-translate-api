@@ -1,4 +1,4 @@
-package com.xaoilin.translate.database.repository.model;
+package com.xaoilin.translate.database.model;
 
 import javax.persistence.*;
 
@@ -8,7 +8,7 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "auth_role_id")
+    @Column
     private int id;
 
     @Column(name = "role_name")

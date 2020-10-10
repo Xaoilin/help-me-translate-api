@@ -1,7 +1,6 @@
-package com.xaoilin.translate.controllers;
+package com.xaoilin.translate.core.controllers;
 
 import com.google.gson.GsonBuilder;
-import com.xaoilin.translate.core.controllers.TranslateController;
 import com.xaoilin.translate.core.domain.SupportedLanguages;
 import com.xaoilin.translate.core.responses.TranslationDTO;
 import org.junit.jupiter.api.BeforeEach;
