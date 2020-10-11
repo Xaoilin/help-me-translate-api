@@ -1,5 +1,6 @@
 package com.xaoilin.translate.core.services;
 
+import com.xaoilin.translate.core.exception.TranslationNotFoundException;
 import com.xaoilin.translate.core.exception.UserNotFoundException;
 import com.xaoilin.translate.database.model.SavedTranslations;
 import com.xaoilin.translate.database.model.AuthUser;
@@ -21,8 +22,8 @@ public class DataService {
     }
 
     @Transactional
-    public void saveWork(String email, String sourceLanguage, String targetLanguage, String sourceText, String targetText) {
-        AuthUser user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found!"));
+    public void saveWork(String email, String sourceLanguage, String targetLanguage, String sourceText, String targetText) throws UserNotFoundException {
+        AuthUser user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         SavedTranslations translations = new SavedTranslations(user, sourceLanguage, targetLanguage, sourceText, targetText);
 
         List<SavedTranslations> savedTranslations = user.getSavedTranslations();
@@ -31,9 +32,19 @@ public class DataService {
         userRepository.save(user);
     }
 
-    public List<SavedTranslations> getSavedWork(String email) {
+    public List<SavedTranslations> getSavedWork(String email) throws UserNotFoundException {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found!"))
+                .orElseThrow(UserNotFoundException::new)
                 .getSavedTranslations();
+    }
+
+    public SavedTranslations getTranslation(long userId, long translationId) throws UserNotFoundException, TranslationNotFoundException {
+        return userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new)
+                .getSavedTranslations()
+                .stream()
+                .filter(data -> data.getId() == translationId)
+                .findFirst()
+                .orElseThrow(TranslationNotFoundException::new);
     }
 }

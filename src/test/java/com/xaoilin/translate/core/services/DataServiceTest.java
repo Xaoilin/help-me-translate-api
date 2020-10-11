@@ -50,7 +50,6 @@ class DataServiceTest {
         assertThat(byEmail).isPresent();
         List<SavedTranslations> savedTranslations = byEmail.get().getSavedTranslations();
         assertThat(savedTranslations.size()).isEqualTo(1);
-        assertThat(savedTranslations.get(0).authUser).isEqualTo(byEmail.get());
         assertThat(savedTranslations.get(0).sourceLanguage).isEqualTo(sourceLanguage);
         assertThat(savedTranslations.get(0).targetLanguage).isEqualTo(targetLanguage);
         assertThat(savedTranslations.get(0).sourceText).isEqualTo(sourceText);
@@ -58,7 +57,7 @@ class DataServiceTest {
     }
 
     @Test
-    void given_validEmailWithSavedTranslations_then_retrievesWorkFromDb() {
+    void given_validEmailWithSavedTranslations_then_retrievesWorkFromDb() throws UserNotFoundException {
         // given
         String email = "populated@hmt.com";
 
@@ -67,7 +66,6 @@ class DataServiceTest {
 
         // then
         assertThat(savedTranslations.size()).isEqualTo(1);
-        assertThat(savedTranslations.get(0).authUser.getEmail()).isEqualTo(email);
         assertThat(savedTranslations.get(0).sourceLanguage).isEqualTo("English");
         assertThat(savedTranslations.get(0).targetLanguage).isEqualTo("Arabic");
         assertThat(savedTranslations.get(0).sourceText).isEqualTo("This is a great morning!");

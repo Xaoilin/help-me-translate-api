@@ -1,5 +1,7 @@
 package com.xaoilin.translate.database.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +13,7 @@ public class SavedTranslations {
     @Column
     public int id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn
     public AuthUser authUser;
