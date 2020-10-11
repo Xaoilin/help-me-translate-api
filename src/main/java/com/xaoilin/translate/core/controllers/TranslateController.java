@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/translate")
 public class TranslateController {
@@ -24,7 +25,6 @@ public class TranslateController {
         this.parseService = parseService;
     }
 
-    @CrossOrigin
     @PostMapping(path = "/file/{targetLanguageCode}")
     public ResponseEntity<TranslationResponse> translateFile(@RequestParam("file") MultipartFile file, @PathVariable String targetLanguageCode) throws IOException {
         String fileContent = parseService.parseContent(file);
@@ -33,7 +33,6 @@ public class TranslateController {
         return ResponseEntity.ok().body(translate);
     }
 
-    @CrossOrigin
     @PostMapping(path = "/json/{targetLanguageCode}")
     public ResponseEntity<TranslationResponse> translateJson(@RequestBody TranslationDTO translationDTO, @PathVariable String targetLanguageCode) {
 
@@ -42,7 +41,6 @@ public class TranslateController {
         return ResponseEntity.ok().body(translate);
     }
 
-    @CrossOrigin
     @PostMapping(path = "/json/{sourceLanguageCode}/{targetLanguageCode}")
     public ResponseEntity<TranslationResponse> translateJson(@RequestBody TranslationDTO translationDTO, @PathVariable String sourceLanguageCode, @PathVariable String targetLanguageCode) {
 
@@ -51,7 +49,6 @@ public class TranslateController {
         return ResponseEntity.ok().body(translate);
     }
 
-    @CrossOrigin
     @PostMapping(path = "/markup/json/{sourceLanguageCode}/{targetLanguageCode}")
     public ResponseEntity<TranslationResponse> translateMarkup(@RequestBody TranslationDTO translationDTO, @PathVariable String sourceLanguageCode, @PathVariable String targetLanguageCode) {
 
