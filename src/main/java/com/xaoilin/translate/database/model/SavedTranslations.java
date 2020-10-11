@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class SavedTranslations {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     public int id;
 

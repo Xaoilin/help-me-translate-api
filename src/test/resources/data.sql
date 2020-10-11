@@ -1,7 +1,11 @@
+-- DROP DATABASE IF EXISTS hmt;
+
 DROP TABLE IF EXISTS auth_user_role;
 DROP TABLE IF EXISTS auth_role;
 DROP TABLE IF EXISTS saved_translations;
 DROP TABLE IF EXISTS auth_user;
+
+-- CREATE DATABASE hmt CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE auth_role (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -35,7 +39,7 @@ CREATE TABLE saved_translations (
   target_text TEXT,
   PRIMARY KEY (id),
   FOREIGN KEY (auth_user_id) REFERENCES auth_user (id)
-);
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 INSERT INTO auth_role VALUES (1,'SUPER_USER','This user has ultimate rights for everything');
 INSERT INTO auth_role VALUES (2,'ADMIN_USER','This user has admin rights for administrative work');

@@ -38,7 +38,7 @@ public class DataController {
                     .body(new MessageResponse("User not found! " + e.getMessage()));
         }
 
-        return ResponseEntity.ok().body(new MessageResponse("Successfully saved user!"));
+        return ResponseEntity.ok().body(new MessageResponse("Successfully saved user data!"));
     }
 
     @CrossOrigin
